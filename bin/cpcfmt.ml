@@ -1,4 +1,5 @@
 open Cmdliner
+open Lib
 
 let version = "v0.1"
 
@@ -7,8 +8,7 @@ let cpcfmt write rule src =
     | Some str -> print_endline str
     | None -> print_newline ()
   in
-  let () = Printf.printf "%B\n" write in
-  List.map print_endline src
+  List.map (File.cpcfmt_file write)  src
 
 let src = Arg.(non_empty & pos_all file [] & info [] ~docv:"FILE")
 
@@ -21,7 +21,7 @@ let rule =
   Arg.(value & opt (some string) None & info ["r"] ~docv:"RULE" ~doc)
 
 let cmd =
-  let doc = "CC+ formater" in
+  let doc = "Format CC+ code" in
   let sdocs = Manpage.s_common_options in
   let exits = Term.default_exits in
   Term.(const cpcfmt $ write $ rule $ src),

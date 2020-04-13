@@ -1,3 +1,3 @@
 (executable
     (name cpcfmt)
-    (libraries cmdliner))
+    (libraries cmdliner lib))
